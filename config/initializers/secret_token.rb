@@ -9,4 +9,19 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-SurfMonkApp::Application.config.secret_key_base = 'c9b96e3d36f0919562831fdf2520cb3440b7edeb9fea2be62cbf78c68a9fad0be7262cb6ea49291559925e7bc00c5f614efba30201ba461389a8a2537f264399'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+SurfMonkApp::Application.config.secret_key_base = secure_token
