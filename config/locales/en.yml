@@ -21,3 +21,13 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        surfer_or_spongy: "I do..."
+  errors:
+    models:
+      user:
+        attributes:
+          surfer_or_spongy:
+            blank: "is required"
