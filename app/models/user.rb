@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+	
 	# :surfer_or_spongy types
 	surfer_or_spongy_types = ['surfer', 'bodyboarder']
 
@@ -15,9 +16,9 @@ class User < ActiveRecord::Base
  	validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
 	
-	validates :surfer_or_spongy, presence: true
-	validates_inclusion_of :surfer_or_spongy, :in => surfer_or_spongy_types,
-		:message => "{{value}} must be in #{surfer_or_spongy_types.join ','}"
+	#validates :surfer_or_spongy, presence: true
+	#validates_inclusion_of :surfer_or_spongy, :in => surfer_or_spongy_types,
+	#	:message => "{{value}} must be in #{surfer_or_spongy_types.join ','}"
 	
 	validates :role, presence: true
 	validates_inclusion_of :role, :in => @@user_roles,

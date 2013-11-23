@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 	before_action :signed_in_user, only: [:index, :edit, :update, :destroy]
 	before_action :correct_user,   only: [:edit, :update]
 	before_action :admin_user,     only: :destroy
+	before_filter :skip_password_attribute, only: :update
 
 	def index
     	@users = User.paginate(page: params[:page]).limit(5)
@@ -76,5 +77,11 @@ class UsersController < ApplicationController
 
 		def admin_user
 			redirect_to(root_url) unless current_user.is_admin
+		end
+
+		def skip_password_attribute
+			if params[:password].blank? && params[:password_validation].blank?
+				params.except!(:password, :password_validation)
+			end
 		end
 end
