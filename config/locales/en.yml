@@ -31,3 +31,5 @@ en:
         attributes:
           surfer_or_spongy:
             blank: "is required"
+        surfer: "Surf"
+        bodyboarder: "Boardyboard"

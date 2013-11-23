@@ -4,11 +4,15 @@ class UsersController < ApplicationController
 	before_action :admin_user,     only: :destroy
 
 	def index
-    	@users = User.paginate(page: params[:page])
+    	@users = User.paginate(page: params[:page]).limit(5)
  	end
 
 	def new
-		@user = User.new
+		if signed_in?
+			redirect_to current_user
+		else
+			@user = User.new
+		end
 	end
 
 	def show
@@ -16,19 +20,23 @@ class UsersController < ApplicationController
 	end
 
 	def create
-	    @user = User.new(user_params)
-	    if @user.save
-	      # Handle a successful save.
-	      sign_in @user
-		  flash[:success] = "Welcome to Surf Monk App!"
-	      redirect_to @user
-	    else
-	      render 'new'
-	    end
+		if signed_in?
+			redirect_to current_user
+		else
+		    @user = User.new(user_params)
+		    if @user.save
+		      sign_in @user
+			  flash[:success] = "Welcome to Surf Monk App!"
+		      redirect_to @user
+		    else
+		      render 'new'
+		    end
+		end
 	end
 
 	def destroy
-		Users.find(params[:id]).destroy
+		user = User.find(params[:id])
+		user.destroy unless user == current_user
 		flash[:success] = "User deleted."
 		redirect_to users_url
 	end
@@ -67,6 +75,6 @@ class UsersController < ApplicationController
 		end
 
 		def admin_user
-			redirect_to(root_url) unless current_user.admin?
+			redirect_to(root_url) unless current_user.is_admin
 		end
 end

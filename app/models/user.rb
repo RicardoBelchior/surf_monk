@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 	surfer_or_spongy_types = ['surfer', 'bodyboarder']
 
 	# user type
-	user_roles = ['admin', 'vip', 'normal']
+	@@user_roles = ['admin', 'vip', 'normal']
 
 
 	before_save { email.downcase! }
@@ -20,8 +20,8 @@ class User < ActiveRecord::Base
 		:message => "{{value}} must be in #{surfer_or_spongy_types.join ','}"
 	
 	validates :role, presence: true
-	validates_inclusion_of :role, :in => user_roles,
-		:message => "{{value}} must be in #{user_roles.join ','}"
+	validates_inclusion_of :role, :in => @@user_roles,
+		:message => "{{value}} must be in #{@@user_roles.join ','}"
 
 	has_secure_password
 	validates :password, length: { minimum: 6 }
@@ -38,6 +38,11 @@ class User < ActiveRecord::Base
 	# helper method for the view
 	def surfer_or_spongy_label
 		surfer_or_spongy_types[surfer_or_spongy]
+	end
+
+	def is_admin
+		admin_role = @@user_roles[0]
+		self.role == admin_role
 	end
 
 	private
