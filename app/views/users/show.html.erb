@@ -8,4 +8,37 @@
       </h1>
     </section>
   </aside>
+
+  <div class="col-sm-8 col-md-8">
+    <% if @user.reports.any? %>
+      <h3>Your latest surfs (<%= @user.reports.count %>)</h3>
+      <!-- <ol class="reports">
+        <%#= render @reports %>
+       </ol> -->
+
+		<table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th>when</th>
+		      <th>spot</th>
+		      <th>swell</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <%= render @reports %>
+		  </tbody>
+		</table>
+
+      <%= will_paginate @reports %>
+
+    <% else %>
+    	<p>common dude, tell us where you've been surfing!</p> 
+    <% end %>
+
+    
+  </div>
+
+
+
+
 </div>

@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-	
+	has_many :reports, dependent: :destroy
+
 	# :surfer_or_spongy types
 	surfer_or_spongy_types = ['surfer', 'bodyboarder']
 

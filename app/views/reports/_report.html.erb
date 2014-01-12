@@ -1,0 +1,12 @@
+<!-- <li>
+  <span class="content"><%= report.spot.name %></span>
+  <span class="timestamp">
+    surfed <%= time_ago_in_words(report.timestamp) %> ago.
+  </span>
+</li> -->
+
+<tr>
+	<td><%= time_ago_in_words(report.timestamp) %> ago</td>
+	<td><%= link_to report.spot.name, report.spot.website, :target => '_blank' %></td> <!-- WATCH OUT FOR EMPTY LINKS -->
+	<td><%= "NW 1.7m, 9s" %></td>
+</tr>
